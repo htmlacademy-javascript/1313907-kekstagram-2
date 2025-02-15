@@ -24,4 +24,3 @@ const getNumber = (str) => {
   }
   return parseInt(result, 10);
 };
-
