@@ -17,7 +17,7 @@ const COMMENT_MESSAGE = [
 
 ];
 
-const COMENTATOR_NAME = [
+const AUTHOR = [
   'Иван',
   'Вован',
   'Костян',
@@ -25,14 +25,18 @@ const COMENTATOR_NAME = [
   'Армэн'
 ];
 
-const getRandomInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
+const Numbers = Object.freeze({
+  BEFORE_COMMENT_NUMBER: 0,
+  UNTIL_COMMENT_NUMBER: 30,
+  BEFORE_LIKES: 15,
+  UNTIL_LIKES: 200,
+  BEFORE_AVATAR_IMAGE: 1,
+  UNTIL_AVATAR_IMAGE: 6
+});
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+const MAX_NUMBER = 10000;
+
+const ARRAY_LENGTH = 25;
 
 function createRandomIdFromGetRandomInteger (min, max) {
   const previousValues = [];
@@ -50,33 +54,32 @@ function createRandomIdFromGetRandomInteger (min, max) {
   };
 }
 
-const createArrayComments = () => {
-  const quantity = getRandomInteger(0, 30);
+const createComment = () => ({
+  id: getRandomInteger(1, MAX_NUMBER),
+  avatar: `img/avatar-${getRandomInteger(BEFORE_AVATAR_IMAGE, UNTIL_AVATAR_IMAGE)}.svg`,
+  message: `${getRandomArrayElement(COMMENT_MESSAGE)}, ${getRandomArrayElement(COMMENT_MESSAGE)}`,
+  name: getRandomArrayElement(AUTHOR)
+});
+
+const createComments = () => {
+  const quantity = getRandomInteger(Numbers.BEFORE_NUMBER, Numbers.UNTIL_NUMBER);
   const arrayComment = [];
-  if(quantity !== 0) {
-    for(let i = 1; i <= quantity; i++) {
-      arrayComment.push({
-        id: getRandomInteger(1, 10000),
-        avatar: `img/avatar-{{${getRandomInteger(1, 6)}}.svg`,
-        message: `${getRandomArrayElement(COMMENT_MESSAGE)}, ${getRandomArrayElement(COMMENT_MESSAGE)}`,
-        name: getRandomArrayElement(COMENTATOR_NAME)
-      });
+
+  if (quantity !== 0) {
+    for (let i = 1; i <= quantity; i++) {
+      arrayComment.push(createComment());
     }
     return arrayComment;
   }
   return '';
 };
 
-const createImage = () => {
-  const randomId = createRandomIdFromGetRandomInteger(1, 25);
-  const randomUrl = createRandomIdFromGetRandomInteger(1, 25);
-  return {
-    id: randomId(),
-    url: `photos/{{${ randomUrl() }}}.jpg`,
-    description: getRandomArrayElement(PHOTO_DESCRIPTION),
-    likes: getRandomInteger(15, 200),
-    comments: createArrayComments()
-  };
-};
+const createImage = () => ({
+  id: createRandomIdFromGetRandomInteger(1, 25)(),
+  url: `photos/${ createRandomIdFromGetRandomInteger(1, 25)()}.jpg`,
+  description: getRandomArrayElement(PHOTO_DESCRIPTION),
+  likes: getRandomInteger(Numbers.BEFORE_LIKES, Numbers.UNTIL_LIKES),
+  comments: createComments()
+});
 
-const photoData = Array.from({length: 25}, createImage);
+const photoData = Array.from({length: ARRAY_LENGTH}, createImage);
