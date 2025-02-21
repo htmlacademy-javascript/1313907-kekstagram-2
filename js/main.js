@@ -56,13 +56,13 @@ function createRandomIdFromGetRandomInteger (min, max) {
 
 const createComment = () => ({
   id: getRandomInteger(1, MAX_NUMBER),
-  avatar: `img/avatar-${getRandomInteger(BEFORE_AVATAR_IMAGE, UNTIL_AVATAR_IMAGE)}.svg`,
+  avatar: `img/avatar-${getRandomInteger(Numbers.BEFORE_AVATAR_IMAGE, Numbers.UNTIL_AVATAR_IMAGE)}.svg`,
   message: `${getRandomArrayElement(COMMENT_MESSAGE)}, ${getRandomArrayElement(COMMENT_MESSAGE)}`,
   name: getRandomArrayElement(AUTHOR)
 });
 
 const createComments = () => {
-  const quantity = getRandomInteger(Numbers.BEFORE_NUMBER, Numbers.UNTIL_NUMBER);
+  const quantity = getRandomInteger(Numbers.BEFORE_COMMENT_NUMBER, Numbers.UNTIL_COMMENT_NUMBER);
   const arrayComment = [];
 
   if (quantity !== 0) {
