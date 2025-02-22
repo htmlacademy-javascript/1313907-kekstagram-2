@@ -75,8 +75,8 @@ const createComments = () => {
 };
 
 const createImage = (index) => ({
-  id: index,
-  url: `photos/${ index }.jpg`,
+  id: index + 1,
+  url: `photos/${ index + 1 }.jpg`,
   description: getRandomArrayElement(PHOTO_DESCRIPTION),
   likes: getRandomInteger(Numbers.BEFORE_LIKES, Numbers.UNTIL_LIKES),
   comments: createComments()
@@ -84,5 +84,5 @@ const createImage = (index) => ({
 
 
 const photoData = Array.from({length: ARRAY_LENGTH}, (_, index) =>
-  createImage(createRandomIdFromGetRandomInteger(1, 25)())
+  createImage(index)
 );
