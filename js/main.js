@@ -74,12 +74,15 @@ const createComments = () => {
   return '';
 };
 
-const createImage = () => ({
-  id: createRandomIdFromGetRandomInteger(1, 25)(),
-  url: `photos/${ createRandomIdFromGetRandomInteger(1, 25)()}.jpg`,
+const createImage = (index) => ({
+  id: index,
+  url: `photos/${ index }.jpg`,
   description: getRandomArrayElement(PHOTO_DESCRIPTION),
   likes: getRandomInteger(Numbers.BEFORE_LIKES, Numbers.UNTIL_LIKES),
   comments: createComments()
 });
 
-const photoData = Array.from({length: ARRAY_LENGTH}, createImage);
+
+const photoData = Array.from({length: ARRAY_LENGTH}, (_, index) =>
+  createImage(createRandomIdFromGetRandomInteger(1, 25)())
+);
