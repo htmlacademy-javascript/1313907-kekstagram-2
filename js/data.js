@@ -27,33 +27,17 @@ const AUTHOR = [
   'Армэн'
 ];
 
-const Numbers = Object.freeze({
+const Numbers = {
   BEFORE_COMMENT_NUMBER: 0,
   UNTIL_COMMENT_NUMBER: 30,
   BEFORE_LIKES: 15,
   UNTIL_LIKES: 200,
   BEFORE_AVATAR_IMAGE: 1,
   UNTIL_AVATAR_IMAGE: 6
-});
+};
 
 const MAX_NUMBER = 10000;
 const ARRAY_LENGTH = 25;
-
-function createRandomIdFromGetRandomInteger (min, max) {
-  const previousValues = [];
-
-  return function () {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-}
 
 const createComment = () => ({
   id: getRandomInteger(1, MAX_NUMBER),
@@ -66,13 +50,10 @@ const createComments = () => {
   const quantity = getRandomInteger(Numbers.BEFORE_COMMENT_NUMBER, Numbers.UNTIL_COMMENT_NUMBER);
   const arrayComment = [];
 
-  if (quantity !== 0) {
-    for (let i = 1; i <= quantity; i++) {
-      arrayComment.push(createComment());
-    }
-    return arrayComment;
+  for (let i = 1; i <= quantity; i++) {
+    arrayComment.push(createComment());
   }
-  return '';
+  return arrayComment;
 };
 
 const createImage = (index) => ({

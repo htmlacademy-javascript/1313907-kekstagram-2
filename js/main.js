@@ -1,2 +1,5 @@
 import {createPhotoData} from './data.js';
-import './functions.js';
+
+const photos = createPhotoData();
+
+console.log(photos);
