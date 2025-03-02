@@ -1,5 +1,6 @@
 import {createPhotoData} from './data.js';
-import {} from './render.js';
+import {addPictures} from './render.js';
 
 const photos = createPhotoData();
+const renderPhotos = addPictures(photos);
 
