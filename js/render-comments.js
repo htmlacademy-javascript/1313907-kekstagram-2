@@ -12,6 +12,7 @@ const commentsLoader = modalWindow.querySelector('.comments-loader');
 const commentsList = modalWindow.querySelector('.social__comments');
 const commentTemplate = commentsList.querySelector('.social__comment');
 
+//Отрисовывает часть комментариев
 const renderNextComments = () => {
   const socialCommentFragment = document.createDocumentFragment();
   const renderedComments = commentsArray.comments.slice(currentCount.count, currentCount.count + COUNT_STEP);
@@ -38,6 +39,7 @@ const renderNextComments = () => {
   currentCount.count += COUNT_STEP;
 };
 
+//Убирает комментарии
 const clearComments = () => {
   currentCount.count = 0;
   commentsList.innerHTML = '';
@@ -45,6 +47,7 @@ const clearComments = () => {
   commentsLoader.removeEventListener('click', renderNextComments);
 };
 
+//Отрисовывает комментарии
 const renderComments = (currentPhotoComments) => {
   commentsList.innerHTML = '';
   commentsArray.comments = currentPhotoComments;
