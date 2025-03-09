@@ -21,7 +21,9 @@ const addPictures = (pictureArray) => {
 
   userPictures.addEventListener('click', (evt) => {
     const currentPictureNode = evt.target.closest('.picture');
+
     if(currentPictureNode) {
+      evt.preventDefault();
       openPhotoModal(currentPictureNode.dataset.pictureId, pictureArray);
     }
   });
