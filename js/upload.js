@@ -1,23 +1,25 @@
+import { isInputFocused } from './validation.js';
 const imageUploadContainer = document.querySelector('.img-upload');
 const imageUploadInput = imageUploadContainer.querySelector('.img-upload__input');
 const imageUploadOverlay = imageUploadContainer.querySelector('.img-upload__overlay');
 const closeButton = imageUploadContainer.querySelector('.img-upload__cancel');
-const imagePreview = imageUploadContainer.querySelector('.img-upload__preview img');
-const submitButton = imageUploadContainer.querySelector('.img-upload__submit');
 
 // Обработчик для клавиши Esc
 const onEscKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closePreviewModal();
+    if (!isInputFocused()) {
+      closePreviewModal();
+    }
   }
 };
 
 const closePreviewModal = () => {
-
-
   imageUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
+
+  //Сбрасывает значение поля выбора файла
+  imageUploadInput.value = '';
 
   // Удаляет обработчики
   document.removeEventListener('keydown', onEscKeydown);
