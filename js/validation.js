@@ -2,12 +2,12 @@ const imageUploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = imageUploadForm.querySelector('.text__hashtags');
 const commentInput = imageUploadForm.querySelector('.text__description');
 
-// Регулярное выражение и валидаторы остаются такими же
+// Регулярное выражение и валидаторы
 const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
 const imageUploadValidator = new Pristine(imageUploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__error-text'
+  errorClass: 'img-upload__field-wrapper--error'
 });
 
 const validateHashtags = (value) => {
@@ -16,15 +16,18 @@ const validateHashtags = (value) => {
   }
   const hashtags = value.trim().split(/\s+/);
   if (hashtags.length > 5) {
+    validateHashtags.lastError = 'tooManyHashtags';
     return false;
   }
   const seenHashtags = new Set();
   for (const hashtag of hashtags) {
     if (!hashtagPattern.test(hashtag)) {
+      validateHashtags.lastError = 'invalidHashtag';
       return false;
     }
     const lowerCaseHashtag = hashtag.toLowerCase();
     if (seenHashtags.has(lowerCaseHashtag)) {
+      validateHashtags.lastError = 'duplicateHashtag';
       return false;
     }
     seenHashtags.add(lowerCaseHashtag);
@@ -32,15 +35,39 @@ const validateHashtags = (value) => {
   return true;
 };
 
+const getHashtagErrorMessage = () => {
+  switch (validateHashtags.lastError) {
+    case 'invalidHashtag':
+      return 'Хэштег должен начинаться с #, содержать только буквы и цифры, длина до 20 символов';
+    case 'tooManyHashtags':
+      return 'Нельзя указать больше 5 хэштегов';
+    case 'duplicateHashtag':
+      return 'Хэштеги не должны повторяться';
+    default:
+      return '';
+  }
+};
+
 const validateComment = (value) => {
   if (!value) {
     return true;
   }
-  return value.length <= 140;
+  if (value.length > 140) {
+    validateComment.lastError = 'tooLongComment';
+    return false;
+  }
+  return true;
 };
 
-imageUploadValidator.addValidator(hashtagInput, validateHashtags, 'Хэштеги должны начинаться с #, содержать только буквы и цифры, быть уникальными, не длиннее 20 символов, максимум 5 хэштегов');
-imageUploadValidator.addValidator(commentInput, validateComment, 'Комментарий не должен превышать 140 символов');
+const getCommentErrorMessage = () => {
+  if (validateComment.lastError === 'tooLongComment') {
+    return 'Комментарий не должен превышать 140 символов';
+  }
+  return '';
+};
+
+imageUploadValidator.addValidator(hashtagInput, validateHashtags, getHashtagErrorMessage);
+imageUploadValidator.addValidator(commentInput, validateComment, getCommentErrorMessage);
 
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
