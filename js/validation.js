@@ -5,7 +5,7 @@ const commentInput = imageUploadForm.querySelector('.text__description');
 const MAX_HASHTAGS = 5;
 const COMMENT_MAX_LENGTH = 140;
 
-// Регулярное выражение и валидаторы
+
 const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
 const imageUploadValidator = new Pristine(imageUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -38,18 +38,13 @@ const validateHashtags = (value) => {
   return true;
 };
 
-const getHashtagErrorMessage = () => {
-  switch (validateHashtags.lastError) {
-    case 'invalidHashtag':
-      return 'Хэштег должен начинаться с #, содержать только буквы и цифры, длина до 20 символов';
-    case 'tooManyHashtags':
-      return 'Нельзя указать больше 5 хэштегов';
-    case 'duplicateHashtag':
-      return 'Хэштеги не должны повторяться';
-    default:
-      return '';
-  }
+const hashtagErrorMessages = {
+  invalidHashtag: 'Хэштег должен начинаться с #, содержать только буквы и цифры, длина до 20 символов',
+  tooManyHashtags: 'Нельзя указать больше 5 хэштегов',
+  duplicateHashtag: 'Хэштеги не должны повторяться'
 };
+
+const getHashtagErrorMessage = () => hashtagErrorMessages[validateHashtags.lastError] || '';
 
 const validateComment = (value) => {
   if (!value) {
@@ -62,12 +57,11 @@ const validateComment = (value) => {
   return true;
 };
 
-const getCommentErrorMessage = () => {
-  if (validateComment.lastError === 'tooLongComment') {
-    return 'Комментарий не должен превышать 140 символов';
-  }
-  return '';
+const commentErrorMessages = {
+  tooLongComment: 'Комментарий не должен превышать 140 символов'
 };
+
+const getCommentErrorMessage = () => commentErrorMessages[validateComment.lastError] || '';
 
 imageUploadValidator.addValidator(hashtagInput, validateHashtags, getHashtagErrorMessage);
 imageUploadValidator.addValidator(commentInput, validateComment, getCommentErrorMessage);
