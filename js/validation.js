@@ -2,6 +2,11 @@ const imageUploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = imageUploadForm.querySelector('.text__hashtags');
 const commentInput = imageUploadForm.querySelector('.text__description');
 
+const Conditions = {
+  MAX_HASHTAGS: 5,
+  COMMENT_MAX_LENGTH: 140
+};
+
 // Регулярное выражение и валидаторы
 const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
 const imageUploadValidator = new Pristine(imageUploadForm, {
@@ -15,7 +20,7 @@ const validateHashtags = (value) => {
     return true;
   }
   const hashtags = value.trim().split(/\s+/);
-  if (hashtags.length > 5) {
+  if (hashtags.length > Conditions.MAX_HASHTAGS) {
     validateHashtags.lastError = 'tooManyHashtags';
     return false;
   }
@@ -52,7 +57,7 @@ const validateComment = (value) => {
   if (!value) {
     return true;
   }
-  if (value.length > 140) {
+  if (value.length > Conditions.COMMENT_MAX_LENGTH) {
     validateComment.lastError = 'tooLongComment';
     return false;
   }
