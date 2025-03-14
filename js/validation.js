@@ -5,7 +5,6 @@ const commentInput = imageUploadForm.querySelector('.text__description');
 const MAX_HASHTAGS = 5;
 const COMMENT_MAX_LENGTH = 140;
 
-
 const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
 const imageUploadValidator = new Pristine(imageUploadForm, {
   classTo: 'img-upload__field-wrapper',
