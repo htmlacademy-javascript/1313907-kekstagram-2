@@ -1,13 +1,10 @@
+const MAX_HASHTAGS = 5;
+const COMMENT_MAX_LENGTH = 140;
+
 const imageUploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = imageUploadForm.querySelector('.text__hashtags');
 const commentInput = imageUploadForm.querySelector('.text__description');
 
-const Conditions = {
-  MAX_HASHTAGS: 5,
-  COMMENT_MAX_LENGTH: 140
-};
-
-// Регулярное выражение и валидаторы
 const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
 const imageUploadValidator = new Pristine(imageUploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -20,7 +17,7 @@ const validateHashtags = (value) => {
     return true;
   }
   const hashtags = value.trim().split(/\s+/);
-  if (hashtags.length > Conditions.MAX_HASHTAGS) {
+  if (hashtags.length > MAX_HASHTAGS) {
     validateHashtags.lastError = 'tooManyHashtags';
     return false;
   }
@@ -40,36 +37,30 @@ const validateHashtags = (value) => {
   return true;
 };
 
-const getHashtagErrorMessage = () => {
-  switch (validateHashtags.lastError) {
-    case 'invalidHashtag':
-      return 'Хэштег должен начинаться с #, содержать только буквы и цифры, длина до 20 символов';
-    case 'tooManyHashtags':
-      return 'Нельзя указать больше 5 хэштегов';
-    case 'duplicateHashtag':
-      return 'Хэштеги не должны повторяться';
-    default:
-      return '';
-  }
+const hashtagErrorMessages = {
+  invalidHashtag: 'Введён невалидный хэштег',
+  tooManyHashtags: 'Превышено количество хэштегов',
+  duplicateHashtag: 'Хэштеги повторяются'
 };
+
+const getHashtagErrorMessage = () => hashtagErrorMessages[validateHashtags.lastError] || '';
 
 const validateComment = (value) => {
   if (!value) {
     return true;
   }
-  if (value.length > Conditions.COMMENT_MAX_LENGTH) {
+  if (value.length > COMMENT_MAX_LENGTH) {
     validateComment.lastError = 'tooLongComment';
     return false;
   }
   return true;
 };
 
-const getCommentErrorMessage = () => {
-  if (validateComment.lastError === 'tooLongComment') {
-    return 'Комментарий не должен превышать 140 символов';
-  }
-  return '';
+const commentErrorMessages = {
+  tooLongComment: 'Длина комментариев больше 140 символов'
 };
+
+const getCommentErrorMessage = () => commentErrorMessages[validateComment.lastError] || '';
 
 imageUploadValidator.addValidator(hashtagInput, validateHashtags, getHashtagErrorMessage);
 imageUploadValidator.addValidator(commentInput, validateComment, getCommentErrorMessage);
