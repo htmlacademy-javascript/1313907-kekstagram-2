@@ -1,5 +1,7 @@
 import { isInputFocused } from './validation.js';
-import { resetScale, MAX_SCALE } from './scale.js';
+import { resetScale} from './scale.js';
+import { updateSlider } from './effect.js';
+
 const imageUploadContainer = document.querySelector('.img-upload');
 const imageUploadInput = imageUploadContainer.querySelector('.img-upload__input');
 const imageUploadOverlay = imageUploadContainer.querySelector('.img-upload__overlay');
@@ -19,8 +21,9 @@ const closePreviewModal = () => {
   imageUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
-  //Сбрасывает стиль и устанавливает дефолтное значение фото
-  resetScale(MAX_SCALE);
+  //Сбрасывает стиль, фильтр и устанавливает дефолтный масштаб фото
+  resetScale();
+  updateSlider('none');
 
   //Сбрасывает значение поля выбора файла
   imageUploadInput.value = '';
@@ -44,5 +47,3 @@ imageUploadInput.addEventListener('change', () => {
 
   addImage();
 });
-
-export default 'upload.js';

@@ -21,8 +21,7 @@ noUiSlider.create(effectLevelSlider, {
 });
 
 const updateEffect = (effect, value) => {
-  const filter = effects[effect].filter(value);
-  imageUploadPreview.style.filter = filter;
+  imageUploadPreview.style.filter = effects[effect].filter(value);
   effectLevelValue.value = value;
 };
 
@@ -59,3 +58,5 @@ effectLevelSlider.noUiSlider.on('update', (values) => {
 });
 
 updateSlider('none');
+
+export {updateSlider};
