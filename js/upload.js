@@ -26,9 +26,7 @@ const closePreviewModal = () => {
   closeButton.removeEventListener('click', closePreviewModal);
 };
 
-
 const addImage = () => {
-
 
   imageUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
