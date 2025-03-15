@@ -59,6 +59,3 @@ effectLevelSlider.noUiSlider.on('update', (values) => {
 });
 
 updateSlider('none');
-
-
-export default 'effect.js';

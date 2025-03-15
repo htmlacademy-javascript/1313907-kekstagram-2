@@ -1,9 +1,9 @@
+const MAX_HASHTAGS = 5;
+const COMMENT_MAX_LENGTH = 140;
+
 const imageUploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = imageUploadForm.querySelector('.text__hashtags');
 const commentInput = imageUploadForm.querySelector('.text__description');
-
-const MAX_HASHTAGS = 5;
-const COMMENT_MAX_LENGTH = 140;
 
 const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
 const imageUploadValidator = new Pristine(imageUploadForm, {
@@ -38,9 +38,9 @@ const validateHashtags = (value) => {
 };
 
 const hashtagErrorMessages = {
-  invalidHashtag: 'Хэштег должен начинаться с #, содержать только буквы и цифры, длина до 20 символов',
-  tooManyHashtags: 'Нельзя указать больше 5 хэштегов',
-  duplicateHashtag: 'Хэштеги не должны повторяться'
+  invalidHashtag: 'Введён невалидный хэштег',
+  tooManyHashtags: 'Превышено количество хэштегов',
+  duplicateHashtag: 'Хэштеги повторяются'
 };
 
 const getHashtagErrorMessage = () => hashtagErrorMessages[validateHashtags.lastError] || '';
@@ -57,7 +57,7 @@ const validateComment = (value) => {
 };
 
 const commentErrorMessages = {
-  tooLongComment: 'Комментарий не должен превышать 140 символов'
+  tooLongComment: 'Длина комментариев больше 140 символов'
 };
 
 const getCommentErrorMessage = () => commentErrorMessages[validateComment.lastError] || '';

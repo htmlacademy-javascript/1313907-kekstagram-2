@@ -1,4 +1,5 @@
 import { isInputFocused } from './validation.js';
+import { resetScale, MAX_SCALE } from './scale.js';
 const imageUploadContainer = document.querySelector('.img-upload');
 const imageUploadInput = imageUploadContainer.querySelector('.img-upload__input');
 const imageUploadOverlay = imageUploadContainer.querySelector('.img-upload__overlay');
@@ -17,6 +18,9 @@ const onEscKeydown = (evt) => {
 const closePreviewModal = () => {
   imageUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
+
+  //Сбрасывает стиль и устанавливает дефолтное значение фото
+  resetScale(MAX_SCALE);
 
   //Сбрасывает значение поля выбора файла
   imageUploadInput.value = '';

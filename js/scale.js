@@ -1,11 +1,11 @@
+const STEP_VALUE = 25;
+const MIN_SCALE = 25;
+const MAX_SCALE = 100;
+
 const scaleValue = document.querySelector('.scale__control--value');
 const imageUploadPreview = document.querySelector('.img-upload__preview img');
 const decreaseButton = document.querySelector('.scale__control--smaller');
 const increaseButton = document.querySelector('.scale__control--bigger');
-
-const STEP_VALUE = 25;
-const MIN_SCALE = 25;
-const MAX_SCALE = 100;
 
 const getScaleValue = () => {
   const value = parseInt(scaleValue.value, 10);
@@ -36,4 +36,4 @@ const resetScale = () => {
 decreaseButton.addEventListener('click', calculateScaleMinus);
 increaseButton.addEventListener('click', calculateScalePlus);
 
-export { calculateScaleMinus, calculateScalePlus, resetScale };
+export { calculateScaleMinus, calculateScalePlus, resetScale, MAX_SCALE };
