@@ -2,7 +2,7 @@ const imageUploadPreview = document.querySelector('.img-upload__preview img');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
 const effectLevelContainer = document.querySelector('.img-upload__effect-level');
 const effectLevelValue = document.querySelector('.effect-level__value');
-const effectRadios = document.querySelectorAll('.effects__radio');
+const effectsRadios = document.querySelectorAll('.effects__radio');
 
 const effects = {
   none: { filter: () => '', min: 0, max: 100, step: 1 },
@@ -44,7 +44,7 @@ const updateSlider = (effect) => {
   }
 };
 
-effectRadios.forEach((radio) => {
+effectsRadios.forEach((radio) => {
   radio.addEventListener('change', () => {
     updateSlider(radio.value);
   });

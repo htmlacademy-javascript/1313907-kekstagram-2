@@ -4,12 +4,12 @@ const checkString = (str, maxLength) => str.length <= maxLength;
 const isPalindrome = (string) => {
   const words = string.replaceAll(' ', '').toLowerCase();
 
-  let emptyString = '';
+  let reversedString = '';
   for(let i = words.length - 1; i >= 0; i--) {
-    emptyString += words[i];
+    reversedString += words[i];
   }
 
-  return emptyString === words;
+  return reversedString === words;
 };
 
 const getNumber = (str) => {

@@ -1,8 +1,8 @@
 const COUNT_STEP = 5;
-const currentCount = {
+const commentsCurrentCount = {
   count: 0
 };
-const commentsArray = {
+const commentsData = {
   comments: []
 };
 
@@ -15,8 +15,8 @@ const commentTemplate = commentsList.querySelector('.social__comment');
 //Отрисовывает часть комментариев
 const renderNextComments = () => {
   const socialCommentFragment = document.createDocumentFragment();
-  const renderedComments = commentsArray.comments.slice(currentCount.count, currentCount.count + COUNT_STEP);
-  const renderedCommentsLength = renderedComments.length + currentCount.count;
+  const renderedComments = commentsData.comments.slice(commentsCurrentCount.count, commentsCurrentCount.count + COUNT_STEP);
+  const renderedCommentsLength = renderedComments.length + commentsCurrentCount.count;
 
   renderedComments.forEach(({avatar, name, message}) => {
     const socialComment = commentTemplate.cloneNode(true);
@@ -30,18 +30,18 @@ const renderNextComments = () => {
 
   commentsList.append(socialCommentFragment);
   commentsCountBlock.firstChild.textContent = `${renderedCommentsLength} из `;
-  commentsCountBlock.querySelector('.social__comment-total-count').textContent = commentsArray.comments.length;
+  commentsCountBlock.querySelector('.social__comment-total-count').textContent = commentsData.comments.length;
 
-  if(renderedCommentsLength >= commentsArray.comments.length) {
+  if(renderedCommentsLength >= commentsData.comments.length) {
     commentsLoader.classList.add('hidden');
   }
 
-  currentCount.count += COUNT_STEP;
+  commentsCurrentCount.count += COUNT_STEP;
 };
 
 //Убирает комментарии
 const clearComments = () => {
-  currentCount.count = 0;
+  commentsCurrentCount.count = 0;
   commentsList.innerHTML = '';
   commentsLoader.classList.remove('hidden');
   commentsLoader.removeEventListener('click', renderNextComments);
@@ -50,7 +50,7 @@ const clearComments = () => {
 //Отрисовывает комментарии
 const renderComments = (currentPhotoComments) => {
   commentsList.innerHTML = '';
-  commentsArray.comments = currentPhotoComments;
+  commentsData.comments = currentPhotoComments;
   renderNextComments();
 
   commentsLoader.addEventListener('click', renderNextComments);
