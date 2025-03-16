@@ -8,7 +8,6 @@ const commentShownCount = modalWindow.querySelector('.social__comment-shown-coun
 const commentTotalCount = modalWindow.querySelector('.social__comment-total-count');
 const socialCaption = modalWindow.querySelector('.social__caption');
 
-
 // Обработчик для клавиши Esc
 const onEscKeydown = (evt) => {
   if (evt.key === 'Escape') {
@@ -53,4 +52,4 @@ const openPhotoModal = (pictureId, photos) => {
   closeButton.addEventListener('click', closePhotoModal);
 };
 
-export { openPhotoModal};
+export { openPhotoModal, closePhotoModal};

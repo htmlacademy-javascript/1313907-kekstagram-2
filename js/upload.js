@@ -47,3 +47,5 @@ imageUploadInput.addEventListener('change', () => {
 
   addImage();
 });
+
+export {closePreviewModal};
