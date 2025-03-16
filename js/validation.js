@@ -19,7 +19,6 @@ const errorMessageTemplate = document.querySelector('#error');
 
 const messageFragment = document.createDocumentFragment();
 
-
 const addSuccessMessage = () => {
   const successMessage = successMessageTemplate.cloneNode(true);
   messageFragment.append(successMessage);
@@ -53,7 +52,6 @@ const addSuccessMessage = () => {
   document.addEventListener('click', onClickOverlay);
 };
 
-
 const addErrorDataMessage = () => {
   const errorMessage = errorDataMessageTemplate.cloneNode(true);
   messageFragment.append(errorMessage);
@@ -67,7 +65,7 @@ const addErrorDataMessage = () => {
 const addErrorMessage = () => {
   const errorMessage = errorMessageTemplate.cloneNode(true);
   messageFragment.append(errorMessage);
-  document.body.append(messageFragment); // Добавляем перед </body>
+  document.body.append(messageFragment);
 
   const errorButton = document.querySelector('.error__button');
   const errorElement = document.querySelector('.error');
