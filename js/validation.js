@@ -171,7 +171,7 @@ const setImageFormSubmit = (onSuccess) => {
           addSuccessMessage();
         })
         .catch(() => {
-          console.log(addErrorMessage());
+          addErrorMessage();
         })
         .finally(unblockSubmitButton);
     }
