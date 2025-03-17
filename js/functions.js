@@ -50,4 +50,11 @@ function createRandomIdFromGetRandomInteger (min, max) {
   };
 }
 
-export {getRandomArrayElement, getRandomInteger};
+export {
+  getRandomArrayElement,
+  getRandomInteger,
+  createRandomIdFromGetRandomInteger,
+  getNumber,
+  isPalindrome,
+  checkString
+};
