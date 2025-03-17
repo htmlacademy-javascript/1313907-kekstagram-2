@@ -4,9 +4,8 @@ const userPictures = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 const listFragment = document.createDocumentFragment();
 
-const addPictures = (pictureArray) => {
-
-  pictureArray.forEach(({id, url, description, likes, comments }) => {
+const addPictures = (picturesArray) => {
+  picturesArray.forEach(({id, url, description, likes, comments }) => {
     const pictureFragment = pictureTemplate.cloneNode(true);
     const pictureItem = pictureFragment.querySelector('.picture');
 
@@ -24,7 +23,7 @@ const addPictures = (pictureArray) => {
 
     if(currentPictureNode) {
       evt.preventDefault();
-      openPhotoModal(currentPictureNode.dataset.pictureId, pictureArray);
+      openPhotoModal(currentPictureNode.dataset.pictureId, picturesArray);
     }
   });
 };
