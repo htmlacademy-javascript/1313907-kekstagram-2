@@ -2,24 +2,25 @@ import { openPhotoModal } from './modal';
 
 const userPictures = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
-const listFragment = document.createDocumentFragment();
 
 const renderPictures = (pictureArray) => {
+  const existingPictures = userPictures.querySelectorAll('.picture');
+  existingPictures.forEach((picture) => picture.remove());
 
-  pictureArray
-    .slice()
-    .sort()
-    .forEach(({id, url, description, likes, comments }) => {
-      const pictureFragment = pictureTemplate.cloneNode(true);
-      const pictureItem = pictureFragment.querySelector('.picture');
+  const listFragment = document.createDocumentFragment();
 
-      pictureItem.dataset.pictureId = id;
-      pictureItem.querySelector('.picture__img').src = url;
-      pictureItem.querySelector('.picture__img').alt = description;
-      pictureItem.querySelector('.picture__likes').textContent = likes;
-      pictureItem.querySelector('.picture__comments').textContent = comments.length;
-      listFragment.append(pictureItem);
-    });
+  pictureArray.forEach(({id, url, description, likes, comments }) => {
+    const pictureFragment = pictureTemplate.cloneNode(true);
+    const pictureItem = pictureFragment.querySelector('.picture');
+
+    pictureItem.dataset.pictureId = id;
+    pictureItem.querySelector('.picture__img').src = url;
+    pictureItem.querySelector('.picture__img').alt = description;
+    pictureItem.querySelector('.picture__likes').textContent = likes;
+    pictureItem.querySelector('.picture__comments').textContent = comments.length;
+    listFragment.append(pictureItem);
+  });
+
   userPictures.append(listFragment);
 
   userPictures.addEventListener('click', (evt) => {

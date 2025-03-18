@@ -1,46 +1,66 @@
+import { renderPictures } from './render';
+
+const COUNT = 10;
+
 const imageFilters = document.querySelector('.img-filters');
 const filterButtons = imageFilters.querySelectorAll('button');
-// const filterDefault = imageFilters.querySelector('#filter-default');
-// const filterRandom = imageFilters.querySelector('#filter-random');
-// const filterDiscussed = imageFilters.querySelector('#filter-discussed');
 
-const showDiscussed = () => {
-  console.log('обсуждаемые');
+const debounce = (callback, timeoutDelay = 500) => {
+  // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
+  // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
+  let timeoutId;
+
+  return (...rest) => {
+    // Перед каждым новым вызовом удаляем предыдущий таймаут,
+    // чтобы они не накапливались
+    clearTimeout(timeoutId);
+
+    // Затем устанавливаем новый таймаут с вызовом колбэка на ту же задержку
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+
+    // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
+    // пока действие совершается чаще, чем переданная задержка timeoutDelay
+  };
 };
 
-const showRandom = () => {
-  console.log('случайные');
+const getDefaultPictures = (pictures) => pictures;
+
+const getRandomPictures = (pictures) => {
+  const shuffled = pictures.slice().sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, Math.min(COUNT, shuffled.length));
 };
+
+const getDiscussedPictures = (pictures) => pictures.slice().sort((a, b) => b.likes - a.likes);
+const debouncedRender = debounce(renderPictures, 500);
 
 const handlers = {
-  onFilterButton: null
-};
+  onFilterButton: (evt, pictures) => {
+    filterButtons.forEach((button) => {
+      button.classList.remove('img-filters__button--active');
+    });
+    evt.target.classList.add('img-filters__button--active');
 
-const showFilters = () => {
-  imageFilters.classList.remove('img-filters--inactive');
-
-  imageFilters.addEventListener('click', handlers.onFilterButton);
-};
-
-handlers.onFilterButton = (evt) => {
-  filterButtons.forEach((button) => {
-    button.classList.remove('img-filters__button--active');
-  });
-
-  switch(evt.target.id) {
-    case 'filter-discussed':
-      showDiscussed();
-      break;
-    case 'filter-random':
-      showRandom();
-      break;
-    case 'filter-default':
-      console.log('по умолчанию');
-      break;
-    default:
+    let filteredPictures;
+    switch(evt.target.id) {
+      case 'filter-default':
+        filteredPictures = getDefaultPictures(pictures);
+        break;
+      case 'filter-random':
+        filteredPictures = getRandomPictures(pictures);
+        break;
+      case 'filter-discussed':
+        filteredPictures = getDiscussedPictures(pictures);
+        break;
+      default:
+        filteredPictures = getDefaultPictures(pictures);
+    }
+    debouncedRender(filteredPictures);
   }
-  evt.target.classList.toggle('img-filters__button--active');
 };
-
+const showFilters = (pictures) => {
+  imageFilters.classList.remove('img-filters--inactive');
+  renderPictures(pictures);
+  imageFilters.addEventListener('click', (evt) => handlers.onFilterButton(evt, pictures));
+};
 
 export {showFilters};
