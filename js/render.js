@@ -3,13 +3,13 @@ import { openPhotoModal } from './modal';
 const userPictures = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content;
 
-const renderPictures = (pictureArray) => {
+const renderPictures = (pictures) => {
   const existingPictures = userPictures.querySelectorAll('.picture');
   existingPictures.forEach((picture) => picture.remove());
 
   const listFragment = document.createDocumentFragment();
 
-  pictureArray.forEach(({id, url, description, likes, comments }) => {
+  pictures.forEach(({id, url, description, likes, comments }) => {
     const pictureFragment = pictureTemplate.cloneNode(true);
     const pictureItem = pictureFragment.querySelector('.picture');
 
@@ -28,7 +28,7 @@ const renderPictures = (pictureArray) => {
 
     if(currentPictureNode) {
       evt.preventDefault();
-      openPhotoModal(currentPictureNode.dataset.pictureId, pictureArray);
+      openPhotoModal(currentPictureNode.dataset.pictureId, pictures);
     }
   });
 };

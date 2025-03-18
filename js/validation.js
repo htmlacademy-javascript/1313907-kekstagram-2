@@ -1,6 +1,7 @@
 import { sendData} from './api';
 const MAX_HASHTAGS = 5;
 const COMMENT_MAX_LENGTH = 140;
+const TIMEOUT_DELAY = 5000;
 
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
@@ -58,7 +59,7 @@ const addErrorDataMessage = () => {
   setTimeout(() => {
     const errorElement = document.querySelector('.data-error');
     errorElement.remove();
-  }, 5000);
+  }, TIMEOUT_DELAY);
 };
 
 const addErrorMessage = () => {

@@ -1,11 +1,12 @@
 import { renderPictures } from './render';
 
 const COUNT = 10;
+const TIMEOUT_DELAY = 500;
 
 const imageFilters = document.querySelector('.img-filters');
 const filterButtons = imageFilters.querySelectorAll('button');
 
-const debounce = (callback, timeoutDelay = 500) => {
+const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
   // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
   // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
@@ -31,7 +32,7 @@ const getRandomPictures = (pictures) => {
 };
 
 const getDiscussedPictures = (pictures) => pictures.slice().sort((a, b) => b.likes - a.likes);
-const debouncedRender = debounce(renderPictures, 500);
+const debouncedRender = debounce(renderPictures);
 
 const handlers = {
   onFilterButton: (evt, pictures) => {

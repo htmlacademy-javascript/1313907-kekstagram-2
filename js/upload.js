@@ -7,8 +7,14 @@ const imageUploadInput = imageUploadContainer.querySelector('.img-upload__input'
 const imageUploadOverlay = imageUploadContainer.querySelector('.img-upload__overlay');
 const closeButton = imageUploadContainer.querySelector('.img-upload__cancel');
 
-const handlers = {
-  onEscKeydown: null,
+// Обработчик для клавиши Esc
+const onEscKeydown = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    if (!isInputFocused()) {
+      closePreviewModal();
+    }
+  }
 };
 
 const closePreviewModal = () => {
@@ -23,18 +29,8 @@ const closePreviewModal = () => {
   imageUploadInput.value = '';
 
   // Удаляет обработчики
-  document.removeEventListener('keydown', handlers.onEscKeydown);
+  document.removeEventListener('keydown', onEscKeydown);
   closeButton.removeEventListener('click', closePreviewModal);
-};
-
-// Обработчик для клавиши Esc
-handlers.onEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    if (!isInputFocused()) {
-      closePreviewModal();
-    }
-  }
 };
 
 const addImage = () => {
@@ -43,7 +39,7 @@ const addImage = () => {
   document.body.classList.add('modal-open');
 
   // Добавляет обработчики
-  document.addEventListener('keydown', handlers.onEscKeydown);
+  document.addEventListener('keydown', onEscKeydown);
   closeButton.addEventListener('click', closePreviewModal);
 };
 
