@@ -1,5 +1,4 @@
 import { sendData} from './api';
-
 const MAX_HASHTAGS = 5;
 const COMMENT_MAX_LENGTH = 140;
 
