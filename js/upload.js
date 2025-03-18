@@ -1,21 +1,12 @@
 import { isInputFocused } from './validation.js';
 import { resetScale} from './scale.js';
 import { updateSlider } from './effect.js';
+import { onEscKeydown } from './utils.js';
 
 const imageUploadContainer = document.querySelector('.img-upload');
 const imageUploadInput = imageUploadContainer.querySelector('.img-upload__input');
 const imageUploadOverlay = imageUploadContainer.querySelector('.img-upload__overlay');
 const closeButton = imageUploadContainer.querySelector('.img-upload__cancel');
-
-// Обработчик для клавиши Esc
-const onEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    if (!isInputFocused()) {
-      closePreviewModal();
-    }
-  }
-};
 
 const closePreviewModal = () => {
   imageUploadOverlay.classList.add('hidden');
@@ -29,9 +20,15 @@ const closePreviewModal = () => {
   imageUploadInput.value = '';
 
   // Удаляет обработчики
-  document.removeEventListener('keydown', onEscKeydown);
+  document.removeEventListener('keydown', onDocumentKeydown);
   closeButton.removeEventListener('click', closePreviewModal);
 };
+
+function onDocumentKeydown (evt) {
+  if(!isInputFocused()) {
+    onEscKeydown(evt, closePreviewModal);
+  }
+}
 
 const addImage = () => {
 
@@ -39,7 +36,7 @@ const addImage = () => {
   document.body.classList.add('modal-open');
 
   // Добавляет обработчики
-  document.addEventListener('keydown', onEscKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
   closeButton.addEventListener('click', closePreviewModal);
 };
 

@@ -1,4 +1,3 @@
-
 const checkString = (str, maxLength) => str.length <= maxLength;
 
 const isPalindrome = (string) => {
@@ -49,6 +48,12 @@ function createRandomIdFromGetRandomInteger (min, max) {
     return currentValue;
   };
 }
+const onEscKeydown = (evt, cb) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    cb();
+  }
+};
 
 export {
   getRandomArrayElement,
@@ -56,5 +61,6 @@ export {
   createRandomIdFromGetRandomInteger,
   getNumber,
   isPalindrome,
-  checkString
+  checkString,
+  onEscKeydown
 };
