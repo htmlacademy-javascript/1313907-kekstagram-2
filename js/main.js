@@ -5,6 +5,7 @@ import './scale.js';
 import './effect.js';
 import {getData} from './api.js';
 import { showFilters } from './filter';
+import './photo-upload.js';
 
 getData()
   .then((data) => {
