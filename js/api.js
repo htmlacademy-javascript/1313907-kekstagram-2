@@ -1,24 +1,27 @@
-const getData = () => fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error(`Произошла ошибка ${response.status}: ${response.statusText}`);
-    }
-    return response.json();
-  });
+const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 
-const sendData = (body) => fetch(
-  'https://31.javascript.htmlacademy.pro/kekstagram',
-  {
-    method: 'POST',
-    body
-  })
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('Ошибка загрузки файла');
-    }
-  })
-  .catch(() => {
-    throw new Error('Не удалось отправить форму. Попробуйте ещё раз');
-  });
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: '/'
+};
+
+const Method = {
+  GET: 'GET',
+  POST: 'POST'
+};
+
+const ErrorText = {
+  [Method.GET]: 'Не удалось загрузить данные. Попробуйте ещё раз',
+  [Method.POST]: 'Не удалось отправить данные формы'
+};
+
+const load = (route, method = Method.GET, body = null) =>
+  fetch(`${BASE_URL}${route}`, {method, body})
+    .then((response) =>
+      response.ok ? response.json() : Promise.reject(ErrorText[method]));
+
+const getData = () => load(Route.GET_DATA);
+
+const sendData = (body) => load(Route.SEND_DATA, Method.POST, body);
 
 export { getData, sendData };
