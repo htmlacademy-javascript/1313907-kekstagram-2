@@ -1,15 +1,11 @@
-import { closePreviewModal } from './upload.js';
+import {createPhotoData} from './data.js';
+import {addPictures} from './render.js';
+import './modal.js';
 import './upload.js';
-import {setImageFormSubmit} from './validation.js';
+import './validation.js';
 import './scale.js';
 import './effect.js';
-import { getData } from './api.js';
-import { showFilters } from './filter';
 
-getData()
-  .then((data) => {
-    showFilters(data);
-  });
-
-setImageFormSubmit(closePreviewModal);
+const photos = createPhotoData();
+addPictures(photos);
 

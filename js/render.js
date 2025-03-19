@@ -9,7 +9,9 @@ const renderPictures = (pictures) => {
 
   const listFragment = document.createDocumentFragment();
 
-  pictures.forEach(({id, url, description, likes, comments }) => {
+const addPictures = (pictureArray) => {
+
+  pictureArray.forEach(({id, url, description, likes, comments }) => {
     const pictureFragment = pictureTemplate.cloneNode(true);
     const pictureItem = pictureFragment.querySelector('.picture');
 
@@ -28,7 +30,7 @@ const renderPictures = (pictures) => {
 
     if(currentPictureNode) {
       evt.preventDefault();
-      openPhotoModal(currentPictureNode.dataset.pictureId, pictures);
+      openPhotoModal(currentPictureNode.dataset.pictureId, pictureArray);
     }
   });
 };

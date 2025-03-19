@@ -12,6 +12,7 @@ const imageUploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = imageUploadForm.querySelector('.text__hashtags');
 const commentInput = imageUploadForm.querySelector('.text__description');
 const submitButton = imageUploadForm.querySelector('#upload-submit');
+const submitButton = imageUploadForm.querySelector('#upload-submit');
 const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
 const errorDataMessageTemplate = document.querySelector('#data-error').content;
 const successMessageTemplate = document.querySelector('#success').content;
