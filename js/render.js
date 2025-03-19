@@ -9,30 +9,30 @@ const renderPictures = (pictures) => {
 
   const listFragment = document.createDocumentFragment();
 
-const addPictures = (pictureArray) => {
+  const addPictures = (pictureArray) => {
 
-  pictureArray.forEach(({id, url, description, likes, comments }) => {
-    const pictureFragment = pictureTemplate.cloneNode(true);
-    const pictureItem = pictureFragment.querySelector('.picture');
+    pictureArray.forEach(({id, url, description, likes, comments }) => {
+      const pictureFragment = pictureTemplate.cloneNode(true);
+      const pictureItem = pictureFragment.querySelector('.picture');
 
-    pictureItem.dataset.pictureId = id;
-    pictureItem.querySelector('.picture__img').src = url;
-    pictureItem.querySelector('.picture__img').alt = description;
-    pictureItem.querySelector('.picture__likes').textContent = likes;
-    pictureItem.querySelector('.picture__comments').textContent = comments.length;
-    listFragment.append(pictureItem);
-  });
+      pictureItem.dataset.pictureId = id;
+      pictureItem.querySelector('.picture__img').src = url;
+      pictureItem.querySelector('.picture__img').alt = description;
+      pictureItem.querySelector('.picture__likes').textContent = likes;
+      pictureItem.querySelector('.picture__comments').textContent = comments.length;
+      listFragment.append(pictureItem);
+    });
 
-  userPictures.append(listFragment);
+    userPictures.append(listFragment);
 
-  userPictures.addEventListener('click', (evt) => {
-    const currentPictureNode = evt.target.closest('.picture');
+    userPictures.addEventListener('click', (evt) => {
+      const currentPictureNode = evt.target.closest('.picture');
 
-    if(currentPictureNode) {
-      evt.preventDefault();
-      openPhotoModal(currentPictureNode.dataset.pictureId, pictureArray);
-    }
-  });
+      if(currentPictureNode) {
+        evt.preventDefault();
+        openPhotoModal(currentPictureNode.dataset.pictureId, pictureArray);
+      }
+    });
+  };
 };
-
 export {renderPictures};
