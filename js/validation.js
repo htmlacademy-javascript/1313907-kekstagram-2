@@ -1,17 +1,16 @@
 import { sendData} from './api';
+
 const MAX_HASHTAGS = 5;
 const COMMENT_MAX_LENGTH = 140;
-const TIMEOUT_DELAY = 5000;
 
 const SubmitButtonText = {
-  IDLE: 'Опубликовать',
+  PUBLIC: 'Опубликовать',
   SENDING: 'Отправляю...'
 };
 
 const imageUploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = imageUploadForm.querySelector('.text__hashtags');
 const commentInput = imageUploadForm.querySelector('.text__description');
-const submitButton = imageUploadForm.querySelector('#upload-submit');
 const submitButton = imageUploadForm.querySelector('#upload-submit');
 const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
 const errorDataMessageTemplate = document.querySelector('#data-error').content;
@@ -60,7 +59,7 @@ const addErrorDataMessage = () => {
   setTimeout(() => {
     const errorElement = document.querySelector('.data-error');
     errorElement.remove();
-  }, TIMEOUT_DELAY);
+  }, 5000);
 };
 
 const addErrorMessage = () => {
@@ -68,8 +67,9 @@ const addErrorMessage = () => {
   messageFragment.append(errorMessage);
   document.body.append(messageFragment);
 
+  const errorButton = document.querySelector('.error__button');
   const errorElement = document.querySelector('.error');
-  const errorButton = errorElement.querySelector('.error__button');
+
   const errorInner = errorElement.querySelector('.error__inner');
 
   const onClickButton = () => {
@@ -84,6 +84,7 @@ const addErrorMessage = () => {
   };
   const onClickOverlay = (evt) => {
     if (!errorInner.contains(evt.target)) {
+      evt.stopPropagation();
       errorElement.remove();
       document.removeEventListener('click', onClickOverlay);
     }
@@ -158,7 +159,7 @@ const blockSubmitButton = () => {
 
 const unblockSubmitButton = () => {
   submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
+  submitButton.textContent = SubmitButtonText.PUBLIC;
 };
 
 const setImageFormSubmit = (onSuccess) => {
@@ -182,4 +183,4 @@ const setImageFormSubmit = (onSuccess) => {
 imageUploadValidator.addValidator(hashtagInput, validateHashtags, getHashtagErrorMessage);
 imageUploadValidator.addValidator(commentInput, validateComment, getCommentErrorMessage);
 
-export { imageUploadValidator, isInputFocused, setImageFormSubmit, addErrorDataMessage};
+export { imageUploadValidator, setImageFormSubmit, isInputFocused, addErrorDataMessage, addErrorMessage };
