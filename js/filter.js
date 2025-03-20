@@ -20,7 +20,7 @@ const getRandomPictures = (pictures) => {
   return shuffled.slice(0, Math.min(COUNT, shuffled.length));
 };
 
-const getDiscussedPictures = (pictures) => pictures.slice().sort((a, b) => b.likes - a.likes);
+const getDiscussedPictures = (pictures) => pictures.slice().sort((a, b) => b.comments.length - a.comments.length);
 
 const debouncedRender = debounce(renderPictures);
 
