@@ -32,6 +32,9 @@ const filterMap = {
 
 const onFilterButtonClick = (evt, pictures) => {
   const button = evt.target;
+  if (button.classList.contains('img-filters__button--active')) {
+    return;
+  }
   filterButtons.forEach((btn) => btn.classList.remove('img-filters__button--active'));
   button.classList.add('img-filters__button--active');
   const filterFunction = filterMap[button.id] || getDefaultPictures;
