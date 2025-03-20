@@ -24,35 +24,24 @@ const getDiscussedPictures = (pictures) => pictures.slice().sort((a, b) => b.lik
 
 const debouncedRender = debounce(renderPictures);
 
-const handlers = {
-  onFilterButton: (evt, pictures) => {
-    filterButtons.forEach((button) => {
-      button.classList.remove('img-filters__button--active');
-    });
-    evt.target.classList.add('img-filters__button--active');
+const filterMap = {
+  'filter-default': getDefaultPictures,
+  'filter-random': getRandomPictures,
+  'filter-discussed': getDiscussedPictures
+};
 
-    let filteredPictures;
-    switch(evt.target.id) {
-      case 'filter-default':
-        filteredPictures = getDefaultPictures(pictures);
-        break;
-      case 'filter-random':
-        filteredPictures = getRandomPictures(pictures);
-        break;
-      case 'filter-discussed':
-        filteredPictures = getDiscussedPictures(pictures);
-        break;
-      default:
-        filteredPictures = getDefaultPictures(pictures);
-    }
-    debouncedRender(filteredPictures);
-  }
+const onFilterButtonClick = (evt, pictures) => {
+  const button = evt.target;
+  filterButtons.forEach((btn) => btn.classList.remove('img-filters__button--active'));
+  button.classList.add('img-filters__button--active');
+  const filterFunction = filterMap[button.id] || getDefaultPictures;
+  debouncedRender(filterFunction(pictures));
 };
 
 const showFilters = (pictures) => {
   imageFilters.classList.remove('img-filters--inactive');
   renderPictures(pictures);
-  imageFilters.addEventListener('click', (evt) => handlers.onFilterButton(evt, pictures));
+  imageFilters.addEventListener('click', (evt) => onFilterButtonClick(evt, pictures));
 };
 
 export {showFilters};

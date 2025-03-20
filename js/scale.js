@@ -36,4 +36,4 @@ const resetScale = () => {
 decreaseButton.addEventListener('click', calculateScaleMinus);
 increaseButton.addEventListener('click', calculateScalePlus);
 
-export { calculateScaleMinus, calculateScalePlus, resetScale, MAX_SCALE };
+export { resetScale, MAX_SCALE };
