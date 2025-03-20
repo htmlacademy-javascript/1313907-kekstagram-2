@@ -32,6 +32,9 @@ const filterMap = {
 
 const onFilterButtonClick = (evt, pictures) => {
   const button = evt.target;
+  if (button.tagName !== 'BUTTON') {
+    return;
+  }
   if (button.classList.contains('img-filters__button--active')) {
     return;
   }
