@@ -5,7 +5,6 @@ const modalWindow = document.querySelector('.big-picture');
 const closeButton = modalWindow.querySelector('.big-picture__cancel');
 const modalImage = modalWindow.querySelector('.big-picture__img img');
 const modalImageLikes = modalWindow.querySelector('.likes-count');
-const commentShownCount = modalWindow.querySelector('.social__comment-shown-count');
 const commentTotalCount = modalWindow.querySelector('.social__comment-total-count');
 const socialCaption = modalWindow.querySelector('.social__caption');
 
