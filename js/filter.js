@@ -5,6 +5,7 @@ const TIMEOUT_DELAY = 500;
 
 const imageFilters = document.querySelector('.img-filters');
 const filterButtons = imageFilters.querySelectorAll('button');
+const userPictures = document.querySelector('.pictures');
 
 const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
   let timeoutId;
@@ -22,7 +23,10 @@ const getRandomPictures = (pictures) => {
 
 const getDiscussedPictures = (pictures) => pictures.slice().sort((a, b) => b.comments.length - a.comments.length);
 
-const debouncedRender = debounce(renderPictures);
+const debouncedRender = debounce((pictures) => {
+  renderPictures(pictures);
+  userPictures.picturesData = pictures;
+});
 
 const filterMap = {
   'filter-default': getDefaultPictures,
@@ -47,6 +51,7 @@ const onFilterButtonClick = (evt, pictures) => {
 const showFilters = (pictures) => {
   imageFilters.classList.remove('img-filters--inactive');
   renderPictures(pictures);
+  userPictures.picturesData = pictures;
   imageFilters.addEventListener('click', (evt) => onFilterButtonClick(evt, pictures));
 };
 

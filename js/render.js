@@ -20,15 +20,14 @@ const renderPictures = (pictures) => {
     listFragment.append(pictureItem);
   });
   userPictures.append(listFragment);
-
-  userPictures.addEventListener('click', (evt) => {
-    const currentPictureNode = evt.target.closest('.picture');
-
-    if(currentPictureNode) {
-      evt.preventDefault();
-      openPhotoModal(currentPictureNode.dataset.pictureId, pictures);
-    }
-  });
 };
+
+userPictures.addEventListener('click', (evt) => {
+  const currentPictureNode = evt.target.closest('.picture');
+  if (currentPictureNode) {
+    evt.preventDefault();
+    openPhotoModal(currentPictureNode.dataset.pictureId, userPictures.picturesData);
+  }
+});
 
 export {renderPictures};

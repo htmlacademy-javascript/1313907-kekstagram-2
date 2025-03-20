@@ -38,7 +38,6 @@ const openPhotoModal = (pictureId, photos) => {
   // Заполняем данными
   modalImage.src = currentPhoto.url;
   modalImageLikes.textContent = currentPhoto.likes;
-  commentShownCount.textContent = currentPhoto.comments.length;
   commentTotalCount.textContent = currentPhoto.comments.length;
   socialCaption.textContent = currentPhoto.description;
 
