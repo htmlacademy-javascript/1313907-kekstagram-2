@@ -5,25 +5,15 @@ const TIMEOUT_DELAY = 500;
 
 const imageFilters = document.querySelector('.img-filters');
 const filterButtons = imageFilters.querySelectorAll('button');
+const userPictures = document.querySelector('.pictures');
 
 const debounce = (callback, timeoutDelay = TIMEOUT_DELAY) => {
-  // Используем замыкания, чтобы id таймаута у нас навсегда приклеился
-  // к возвращаемой функции с setTimeout, тогда мы его сможем перезаписывать
   let timeoutId;
-
   return (...rest) => {
-    // Перед каждым новым вызовом удаляем предыдущий таймаут,
-    // чтобы они не накапливались
     clearTimeout(timeoutId);
-
-    // Затем устанавливаем новый таймаут с вызовом колбэка на ту же задержку
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-
-    // Таким образом цикл «поставить таймаут - удалить таймаут» будет выполняться,
-    // пока действие совершается чаще, чем переданная задержка timeoutDelay
   };
 };
-
 const getDefaultPictures = (pictures) => pictures;
 
 const getRandomPictures = (pictures) => {
@@ -31,37 +21,35 @@ const getRandomPictures = (pictures) => {
   return shuffled.slice(0, Math.min(COUNT, shuffled.length));
 };
 
-const getDiscussedPictures = (pictures) => pictures.slice().sort((a, b) => b.likes - a.likes);
-const debouncedRender = debounce(renderPictures);
+const getDiscussedPictures = (pictures) => pictures.slice().sort((a, b) => b.comments.length - a.comments.length);
 
-const handlers = {
-  onFilterButton: (evt, pictures) => {
-    filterButtons.forEach((button) => {
-      button.classList.remove('img-filters__button--active');
-    });
-    evt.target.classList.add('img-filters__button--active');
+const debouncedRender = debounce((pictures) => {
+  renderPictures(pictures);
+  userPictures.picturesData = pictures;
+});
 
-    let filteredPictures;
-    switch(evt.target.id) {
-      case 'filter-default':
-        filteredPictures = getDefaultPictures(pictures);
-        break;
-      case 'filter-random':
-        filteredPictures = getRandomPictures(pictures);
-        break;
-      case 'filter-discussed':
-        filteredPictures = getDiscussedPictures(pictures);
-        break;
-      default:
-        filteredPictures = getDefaultPictures(pictures);
-    }
-    debouncedRender(filteredPictures);
-  }
+const filterMap = {
+  'filter-default': getDefaultPictures,
+  'filter-random': getRandomPictures,
+  'filter-discussed': getDiscussedPictures
 };
+
+const onFilterButtonClick = (evt, pictures) => {
+  const button = evt.target;
+  if (button.tagName !== 'BUTTON' || button.classList.contains('img-filters__button--active')) {
+    return;
+  }
+  filterButtons.forEach((btn) => btn.classList.remove('img-filters__button--active'));
+  button.classList.add('img-filters__button--active');
+  const filterFunction = filterMap[button.id] || getDefaultPictures;
+  debouncedRender(filterFunction(pictures));
+};
+
 const showFilters = (pictures) => {
   imageFilters.classList.remove('img-filters--inactive');
   renderPictures(pictures);
-  imageFilters.addEventListener('click', (evt) => handlers.onFilterButton(evt, pictures));
+  userPictures.picturesData = pictures;
+  imageFilters.addEventListener('click', (evt) => onFilterButtonClick(evt, pictures));
 };
 
 export {showFilters};

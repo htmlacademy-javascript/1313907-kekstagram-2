@@ -1,11 +1,18 @@
-import {createPhotoData} from './data.js';
-import {addPictures} from './render.js';
-import './modal.js';
+import { closePreviewModal } from './upload.js';
+import {setImageFormSubmit} from './validation.js';
+import {getData} from './api.js';
+import { showFilters } from './filter';
+import { addErrorDataMessage } from './message.js';
 import './upload.js';
-import './validation.js';
 import './scale.js';
 import './effect.js';
+import './photo-upload.js';
 
-const photos = createPhotoData();
-addPictures(photos);
 
+getData()
+  .then((data) => {
+    showFilters(data);
+  })
+  .catch(() => addErrorDataMessage());
+
+setImageFormSubmit(closePreviewModal);

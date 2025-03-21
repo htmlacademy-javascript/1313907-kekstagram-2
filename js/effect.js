@@ -1,9 +1,3 @@
-const imageUploadPreview = document.querySelector('.img-upload__preview img');
-const effectLevelSlider = document.querySelector('.effect-level__slider');
-const effectLevelContainer = document.querySelector('.img-upload__effect-level');
-const effectLevelValue = document.querySelector('.effect-level__value');
-const effectsRadios = document.querySelectorAll('.effects__radio');
-
 const effects = {
   none: { filter: () => '', min: 0, max: 100, step: 1 },
   chrome: { filter: (intensity) => `grayscale(${parseFloat(intensity).toFixed(1)})`, min: 0, max: 1, step: 0.1 },
@@ -13,16 +7,18 @@ const effects = {
   heat: { filter: (intensity) => `brightness(${parseFloat(intensity).toFixed(1)})`, min: 1, max: 3, step: 0.1 }
 };
 
-noUiSlider.create(effectLevelSlider, {
-  range: { min: 0, max: 100 },
-  start: 100,
-  step: 1,
-  connect: 'lower'
-});
+const imageUploadPreview = document.querySelector('.img-upload__preview img');
+const effectLevelSlider = document.querySelector('.effect-level__slider');
+const effectLevelContainer = document.querySelector('.img-upload__effect-level');
+const effectLevelValue = document.querySelector('.effect-level__value');
+const effectsRadios = document.querySelectorAll('.effects__radio');
 
 const updateEffect = (effect, value) => {
-  imageUploadPreview.style.filter = effects[effect].filter(value);
-  effectLevelValue.value = value;
+  const config = effects[effect];
+
+  const formattedValue = config.step === 1 ? Number(value).toFixed(0) : Number(value).toFixed(1);
+  imageUploadPreview.style.filter = config.filter(formattedValue);
+  effectLevelValue.value = formattedValue;
 };
 
 const updateSlider = (effect) => {
@@ -43,6 +39,13 @@ const updateSlider = (effect) => {
     updateEffect(effect, config.max);
   }
 };
+
+noUiSlider.create(effectLevelSlider, {
+  range: { min: 0, max: 100 },
+  start: 100,
+  step: 1,
+  connect: 'lower'
+});
 
 effectsRadios.forEach((radio) => {
   radio.addEventListener('change', () => {

@@ -5,18 +5,8 @@ const modalWindow = document.querySelector('.big-picture');
 const closeButton = modalWindow.querySelector('.big-picture__cancel');
 const modalImage = modalWindow.querySelector('.big-picture__img img');
 const modalImageLikes = modalWindow.querySelector('.likes-count');
-const commentShownCount = modalWindow.querySelector('.social__comment-shown-count');
 const commentTotalCount = modalWindow.querySelector('.social__comment-total-count');
 const socialCaption = modalWindow.querySelector('.social__caption');
-
-
-// Обработчик для клавиши Esc
-const onEscKeydown = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    closePhotoModal();
-  }
-};
 
 // Функция закрытия модального окна
 const closePhotoModal = () => {
@@ -47,7 +37,6 @@ const openPhotoModal = (pictureId, photos) => {
   // Заполняем данными
   modalImage.src = currentPhoto.url;
   modalImageLikes.textContent = currentPhoto.likes;
-  commentShownCount.textContent = currentPhoto.comments.length;
   commentTotalCount.textContent = currentPhoto.comments.length;
   socialCaption.textContent = currentPhoto.description;
 

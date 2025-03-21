@@ -1,10 +1,11 @@
 import { sendData} from './api';
+import { addSuccessMessage, addErrorMessage } from './message';
+
 const MAX_HASHTAGS = 5;
 const COMMENT_MAX_LENGTH = 140;
-const TIMEOUT_DELAY = 5000;
 
 const SubmitButtonText = {
-  IDLE: 'Опубликовать',
+  PUBLIC: 'Опубликовать',
   SENDING: 'Отправляю...'
 };
 
@@ -12,87 +13,7 @@ const imageUploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = imageUploadForm.querySelector('.text__hashtags');
 const commentInput = imageUploadForm.querySelector('.text__description');
 const submitButton = imageUploadForm.querySelector('#upload-submit');
-const submitButton = imageUploadForm.querySelector('#upload-submit');
 const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
-const errorDataMessageTemplate = document.querySelector('#data-error').content;
-const successMessageTemplate = document.querySelector('#success').content;
-const errorMessageTemplate = document.querySelector('#error').content;
-
-const messageFragment = document.createDocumentFragment();
-
-const addSuccessMessage = () => {
-  const successMessage = successMessageTemplate.cloneNode(true);
-  messageFragment.append(successMessage);
-  document.body.append(messageFragment);
-
-  const successButton = document.querySelector('.success__button');
-  const successElement = document.querySelector('.success');
-  const successElementModal = successElement.querySelector('.success__inner');
-
-  const onClickButton = () => {
-    successElement.remove();
-    successButton.removeEventListener('click', onClickButton);
-  };
-
-  const onEscapeKeydown = (evt) => {
-    if (evt.key === 'Escape') {
-      successElement.remove();
-      document.removeEventListener('keydown', onEscapeKeydown);
-    }
-  };
-
-  const onClickOverlay = (evt) => {
-    if(successElement.className === 'success' && !successElementModal.contains(evt.target)) {
-      successElement.remove();
-      document.removeEventListener('click', onClickOverlay);
-    }
-  };
-
-  successButton.addEventListener('click', onClickButton);
-  document.addEventListener('keydown', onEscapeKeydown);
-  document.addEventListener('click', onClickOverlay);
-};
-
-const addErrorDataMessage = () => {
-  const errorMessage = errorDataMessageTemplate.cloneNode(true);
-  messageFragment.append(errorMessage);
-  document.body.append(messageFragment);
-  setTimeout(() => {
-    const errorElement = document.querySelector('.data-error');
-    errorElement.remove();
-  }, TIMEOUT_DELAY);
-};
-
-const addErrorMessage = () => {
-  const errorMessage = errorMessageTemplate.cloneNode(true);
-  messageFragment.append(errorMessage);
-  document.body.append(messageFragment);
-
-  const errorElement = document.querySelector('.error');
-  const errorButton = errorElement.querySelector('.error__button');
-  const errorInner = errorElement.querySelector('.error__inner');
-
-  const onClickButton = () => {
-    errorElement.remove();
-    errorButton.removeEventListener('click', onClickButton);
-  };
-  const onEscapeKeydown = (evt) => {
-    if (evt.key === 'Escape') {
-      errorElement.remove();
-      document.removeEventListener('keydown', onEscapeKeydown);
-    }
-  };
-  const onClickOverlay = (evt) => {
-    if (!errorInner.contains(evt.target)) {
-      errorElement.remove();
-      document.removeEventListener('click', onClickOverlay);
-    }
-  };
-
-  errorButton.addEventListener('click', onClickButton);
-  document.addEventListener('keydown', onEscapeKeydown);
-  document.addEventListener('click', onClickOverlay);
-};
 
 const isInputFocused = () => hashtagInput === document.activeElement || commentInput === document.activeElement;
 const imageUploadValidator = new Pristine(imageUploadForm, {
@@ -158,7 +79,7 @@ const blockSubmitButton = () => {
 
 const unblockSubmitButton = () => {
   submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
+  submitButton.textContent = SubmitButtonText.PUBLIC;
 };
 
 const setImageFormSubmit = (onSuccess) => {
@@ -182,4 +103,4 @@ const setImageFormSubmit = (onSuccess) => {
 imageUploadValidator.addValidator(hashtagInput, validateHashtags, getHashtagErrorMessage);
 imageUploadValidator.addValidator(commentInput, validateComment, getCommentErrorMessage);
 
-export { imageUploadValidator, isInputFocused, setImageFormSubmit, addErrorDataMessage};
+export { imageUploadValidator, setImageFormSubmit, isInputFocused };

@@ -29,7 +29,7 @@ const renderNextComments = () => {
   });
 
   commentsList.append(socialCommentFragment);
-  commentsCountBlock.firstChild.textContent = `${renderedCommentsLength} из `;
+  commentsCountBlock.firstChild.textContent = `${renderedCommentsLength}`;
   commentsCountBlock.querySelector('.social__comment-total-count').textContent = commentsData.comments.length;
 
   if(renderedCommentsLength >= commentsData.comments.length) {
