@@ -14,8 +14,11 @@ const effectLevelValue = document.querySelector('.effect-level__value');
 const effectsRadios = document.querySelectorAll('.effects__radio');
 
 const updateEffect = (effect, value) => {
-  imageUploadPreview.style.filter = effects[effect].filter(value);
-  effectLevelValue.value = value;
+  const config = effects[effect];
+
+  const formattedValue = config.step === 1 ? Number(value).toFixed(0) : Number(value).toFixed(1);
+  imageUploadPreview.style.filter = config.filter(formattedValue);
+  effectLevelValue.value = formattedValue;
 };
 
 const updateSlider = (effect) => {
