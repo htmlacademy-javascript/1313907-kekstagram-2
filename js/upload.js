@@ -44,7 +44,6 @@ const addImage = () => {
 };
 
 imageUploadInput.addEventListener('change', () => {
-
   addImage();
 });
 
