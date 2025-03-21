@@ -35,7 +35,7 @@ const filterMap = {
 };
 
 const onFilterButtonClick = (evt, pictures) => {
-  const button = evt.target;
+  const button = evt.target.closest('button');
   if (button.tagName !== 'BUTTON' || button.classList.contains('img-filters__button--active')) {
     return;
   }
@@ -49,6 +49,8 @@ const showFilters = (pictures) => {
   imageFilters.classList.remove('img-filters--inactive');
   renderPictures(pictures);
   userPictures.picturesData = pictures;
+
+  imageFilters.removeEventListener('click', onFilterButtonClick);
   imageFilters.addEventListener('click', (evt) => onFilterButtonClick(evt, pictures));
 };
 
