@@ -1,4 +1,4 @@
-import { closePreviewModal } from './upload.js';
+import { onPreviewButtonClick } from './upload.js';
 import {setImageFormSubmit} from './validation.js';
 import {getData} from './api.js';
 import { showFilters } from './filter';
@@ -15,4 +15,4 @@ getData()
   })
   .catch(() => addErrorDataMessage());
 
-setImageFormSubmit(closePreviewModal);
+setImageFormSubmit(onPreviewButtonClick);

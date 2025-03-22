@@ -9,7 +9,7 @@ const imageUploadInput = imageUploadContainer.querySelector('.img-upload__input'
 const imageUploadOverlay = imageUploadContainer.querySelector('.img-upload__overlay');
 const closeButton = imageUploadContainer.querySelector('.img-upload__cancel');
 
-const closePreviewModal = () => {
+const onPreviewButtonClick = () => {
   imageUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
@@ -21,7 +21,7 @@ const closePreviewModal = () => {
   imageUploadInput.value = '';
 
   document.removeEventListener('keydown', onDocumentKeydown);
-  closeButton.removeEventListener('click', closePreviewModal);
+  closeButton.removeEventListener('click', onPreviewButtonClick);
 };
 
 function onDocumentKeydown (evt) {
@@ -31,7 +31,7 @@ function onDocumentKeydown (evt) {
     return;
   }
   if(!isInputFocused()) {
-    onEscKeydown(evt, closePreviewModal);
+    onEscKeydown(evt, onPreviewButtonClick);
   }
 }
 
@@ -40,11 +40,11 @@ const addImage = () => {
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onDocumentKeydown);
-  closeButton.addEventListener('click', closePreviewModal);
+  closeButton.addEventListener('click', onPreviewButtonClick);
 };
 
 imageUploadInput.addEventListener('change', () => {
   addImage();
 });
 
-export {closePreviewModal};
+export {onPreviewButtonClick};
