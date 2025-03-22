@@ -1,4 +1,5 @@
 const COUNT_STEP = 5;
+
 const commentsCurrentCount = {
   count: 0
 };
@@ -13,7 +14,7 @@ const commentsList = modalWindow.querySelector('.social__comments');
 const commentTemplate = commentsList.querySelector('.social__comment');
 
 //Отрисовывает часть комментариев
-const renderNextComments = () => {
+const onCommentsLoad = () => {
   const socialCommentFragment = document.createDocumentFragment();
   const renderedComments = commentsData.comments.slice(commentsCurrentCount.count, commentsCurrentCount.count + COUNT_STEP);
   const renderedCommentsLength = renderedComments.length + commentsCurrentCount.count;
@@ -44,16 +45,16 @@ const clearComments = () => {
   commentsCurrentCount.count = 0;
   commentsList.innerHTML = '';
   commentsLoader.classList.remove('hidden');
-  commentsLoader.removeEventListener('click', renderNextComments);
+  commentsLoader.removeEventListener('click', onCommentsLoad);
 };
 
 //Отрисовывает комментарии
 const renderComments = (currentPhotoComments) => {
   commentsList.innerHTML = '';
   commentsData.comments = currentPhotoComments;
-  renderNextComments();
+  onCommentsLoad();
 
-  commentsLoader.addEventListener('click', renderNextComments);
+  commentsLoader.addEventListener('click', onCommentsLoad);
 };
 
 export {renderComments, clearComments};

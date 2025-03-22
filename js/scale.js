@@ -17,13 +17,13 @@ const updateScale = (newValue) => {
   imageUploadPreview.style.transform = `scale(${newValue / 100})`;
 };
 
-const calculateScaleMinus = () => {
+const onDecreaseButtonClick = () => {
   const currentValue = getScaleValue();
   const newValue = Math.max(currentValue - STEP_VALUE, MIN_SCALE);
   updateScale(newValue);
 };
 
-const calculateScalePlus = () => {
+const onIncreaseButtonClick = () => {
   const currentValue = getScaleValue();
   const newValue = Math.min(currentValue + STEP_VALUE, MAX_SCALE);
   updateScale(newValue);
@@ -33,7 +33,7 @@ const resetScale = () => {
   updateScale(MAX_SCALE);
 };
 
-decreaseButton.addEventListener('click', calculateScaleMinus);
-increaseButton.addEventListener('click', calculateScalePlus);
+decreaseButton.addEventListener('click', onDecreaseButtonClick);
+increaseButton.addEventListener('click', onIncreaseButtonClick);
 
 export { resetScale, MAX_SCALE };

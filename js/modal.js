@@ -9,7 +9,7 @@ const commentTotalCount = modalWindow.querySelector('.social__comment-total-coun
 const socialCaption = modalWindow.querySelector('.social__caption');
 
 // Функция закрытия модального окна
-const closePhotoModal = () => {
+const onButtonClick = () => {
   clearComments();
 
   modalWindow.classList.add('hidden');
@@ -17,11 +17,11 @@ const closePhotoModal = () => {
 
   // удаляет обработчики
   document.removeEventListener('keydown', onDocumentKeydown);
-  closeButton.removeEventListener('click', closePhotoModal);
+  closeButton.removeEventListener('click', onButtonClick);
 };
 
 function onDocumentKeydown (evt) {
-  onEscKeydown(evt, closePhotoModal);
+  onEscKeydown(evt, onButtonClick);
 }
 
 // Функция открытия модального окна
@@ -44,7 +44,7 @@ const openPhotoModal = (pictureId, photos) => {
 
   // Добавляем обработчики
   document.addEventListener('keydown', onDocumentKeydown);
-  closeButton.addEventListener('click', closePhotoModal);
+  closeButton.addEventListener('click', onButtonClick);
 };
 
-export { openPhotoModal, closePhotoModal};
+export { openPhotoModal, onButtonClick};

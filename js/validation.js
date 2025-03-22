@@ -3,6 +3,7 @@ import { addSuccessMessage, addErrorMessage } from './message';
 
 const MAX_HASHTAGS = 5;
 const COMMENT_MAX_LENGTH = 140;
+const HASHTAG_PATTERN = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
 
 const SubmitButtonText = {
   PUBLIC: 'Опубликовать',
@@ -13,7 +14,6 @@ const imageUploadForm = document.querySelector('.img-upload__form');
 const hashtagInput = imageUploadForm.querySelector('.text__hashtags');
 const commentInput = imageUploadForm.querySelector('.text__description');
 const submitButton = imageUploadForm.querySelector('#upload-submit');
-const hashtagPattern = /^#[a-zA-Zа-яА-ЯёЁ0-9]{1,19}$/i;
 
 const isInputFocused = () => hashtagInput === document.activeElement || commentInput === document.activeElement;
 const imageUploadValidator = new Pristine(imageUploadForm, {
@@ -33,7 +33,7 @@ const validateHashtags = (value) => {
   }
   const seenHashtags = new Set();
   for (const hashtag of hashtags) {
-    if (!hashtagPattern.test(hashtag)) {
+    if (!HASHTAG_PATTERN.test(hashtag)) {
       validateHashtags.lastError = 'invalidHashtag';
       return false;
     }
